@@ -4,12 +4,13 @@ import $ from 'jquery';
 
 import Post from './components/Post.jsx';
 import Feed from './components/Feed.jsx';
+import sampleData from './sample_data.js';
 
 /*
   READ THESE COMMENTS AS A PART OF STEP TWO
 
-  To manage switching among the different views in this application, 
-  we have implemented a "view switcher" in the `App` component. 
+  To manage switching among the different views in this application,
+  we have implemented a "view switcher" in the `App` component.
 
   There are three key parts to the view switcher:
     1. The `view` property defined on the `App` component's `state`
@@ -17,7 +18,7 @@ import Feed from './components/Feed.jsx';
     3. The `renderView` method defined on the `App` component
 
   The value of the `view` property will determine which gets returned by the
-  `renderView` method, which is invoked inside the `App` component's `render`. 
+  `renderView` method, which is invoked inside the `App` component's `render`.
   You can set the initial value of `view` in the `App` component's `constructor`
   function, determining what view gets rendered "by default".
 
@@ -35,8 +36,9 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      view: 'feed'
-    }
+      view: 'feed',
+      sampleData: sampleData //[{},{},{},{}]
+    };
 
     this.changeView = this.changeView.bind(this);
   }
@@ -51,9 +53,11 @@ class App extends React.Component {
     const {view} = this.state;
 
     if (view === 'feed') {
-      return <Feed handleClick={() => this.changeView('anypostview')}/>
+      return <Feed
+        handleClick={() => this.changeView('anypostview')}
+        samples={this.state.sampleData}/>;
     } else {
-      return <Post />
+      return <Post />;
     }
   }
   render() {
@@ -67,7 +71,7 @@ class App extends React.Component {
           <span className={this.state.view === 'feed'
             ? 'nav-selected'
             : 'nav-unselected'}
-            onClick={() => this.changeView('feed')}>
+          onClick={() => this.changeView('feed')}>
             See all Posts
           </span>
           <span className="nav-unselected">
