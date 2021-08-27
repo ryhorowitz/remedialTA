@@ -48,7 +48,19 @@ class App extends React.Component {
       view: option
     });
   }
-
+  componentDidMount() {
+    //get req /api/blogs
+    $.get({
+      url: '/api/blogs',
+      success: (data) => {
+        console.log(data);
+        //do something with the data
+        this.setState({
+          sampleData: data
+        });
+      }
+    });
+  }
   renderView() {
     const {view} = this.state;
 

@@ -21,8 +21,6 @@ app.get('/api/blogs', function(req, res) {
       res.status(200).send(data);
     }
   });
-  //You should use the Mongoose model exported by Blog.js to fetch all of the blogs from the database.
-
 });
 
 app.listen(PORT, () => {
