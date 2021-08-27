@@ -59,6 +59,7 @@ class App extends React.Component {
           sampleData: data
         });
       }
+
     });
   }
   renderView() {
