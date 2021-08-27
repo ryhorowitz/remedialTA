@@ -17,7 +17,7 @@ const blogSchema = new mongoose.Schema(
 const Blog = mongoose.model('Blog', blogSchema);
 
 const find = (cb) => {
-  Blog.find().exec( (err, data) => {
+  Blog.find().sort({'createdAt': -1}).exec( (err, data) => {
     if (err) {
       console.error('ERROR in BLOG FIND', err);
     } else {
