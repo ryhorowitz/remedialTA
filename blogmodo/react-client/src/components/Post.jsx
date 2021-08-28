@@ -10,6 +10,8 @@ const pFormat = (body) => {
 };
 
 const Post = (props) => {
+  // Refactor your Post component in such a way that every time it is rendered, an AJAX PATCH request is made to the server route you have just created.
+
   const posts = props.posts;
   const i = props.selected;
   const timeStamp = moment(posts[i].createdAt).fromNow();

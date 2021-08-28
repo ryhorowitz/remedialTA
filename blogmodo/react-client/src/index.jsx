@@ -4,33 +4,8 @@ import $ from 'jquery';
 
 import Post from './components/Post.jsx';
 import Feed from './components/Feed.jsx';
+import Admin from './components/Admin.jsx';
 import sampleData from './sample_data.js';
-
-/*
-  READ THESE COMMENTS AS A PART OF STEP TWO
-
-  To manage switching among the different views in this application,
-  we have implemented a "view switcher" in the `App` component.
-
-  There are three key parts to the view switcher:
-    1. The `view` property defined on the `App` component's `state`
-    2. The `changeView` method defined on the `App` component
-    3. The `renderView` method defined on the `App` component
-
-  The value of the `view` property will determine which gets returned by the
-  `renderView` method, which is invoked inside the `App` component's `render`.
-  You can set the initial value of `view` in the `App` component's `constructor`
-  function, determining what view gets rendered "by default".
-
-  If you haven't modified this code yet, the view switcher observes the following rules:
-  - The default view is 'feed'
-  - If the view is set to 'feed', the `<Feed>` component is displayed
-  - If the view is set to any other value, the `<Post>` component is displayed
-  - The `changeView` function should change the value of `view` in the `App` component's state.
-
-  You'll make some refactors and additions to this view switcher throughout the
-  next steps of the assessment. When you're ready, return to the README.
-*/
 
 class App extends React.Component {
   constructor() {
@@ -54,7 +29,7 @@ class App extends React.Component {
     });
     this.changeView(sampleData[i].title);
   }
-
+  // In the App component for your client, refactor the view switcher in such a way that setting the value of view will cause your new Admin component to be rendered.
   changeView(option) {
 
     this.setState({
@@ -76,11 +51,13 @@ class App extends React.Component {
   }
   renderView() {
     const {view} = this.state;
-
+    // Refactor the navigation section of the App to allow the user to navigate to the Admin view by clicking "Admin" in the nav bar at the top of the app.
     if (view === 'feed') {
       return <Feed
         handleClick={this.selectPost}
         samples={this.state.posts}/>;
+    } else if (view === 'admin') {
+      return <Admin posts={this.state.posts}/>;
     } else {
       return <Post
         posts={this.state.posts}
@@ -104,7 +81,8 @@ class App extends React.Component {
           <span className="nav-unselected">
             Write a Post
           </span>
-          <span className="nav-unselected">
+          <span className="nav-unselected"
+            onClick={() => this.changeView('admin')}>
             Admin
           </span>
         </div>

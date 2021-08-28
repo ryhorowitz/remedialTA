@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('../database-mongodb/index.js');
-const { Blogs, find } = require('../database-mongodb/Blog.js');
+const { Blogs, find, patch } = require('../database-mongodb/Blog.js');
 
 const app = express();
 const PORT = 3000;
@@ -19,6 +19,20 @@ app.get('/api/blogs', function(req, res) {
     } else {
       console.log('DATA in SERVER', data);
       res.status(200).send(data);
+    }
+  });
+});
+// In your Express server, create a request handler that will respond to a PATCH request to the route /api/blogs/:blogId. Your request handler should find the blog post in the database with the corresponding _id, then increment that blog post's views counter.
+// Use Express' route parameters to get the blogId out of your request URL.
+app.patch('/api/blogs/:blogId', (req, res) => {
+  //req.params;
+  patch(req.body.id, (err, updatedDoc) => {
+    if (err) {
+      console.error('ERROR IN SERVER PATCH ROUTE', err);
+    } else {
+      console.log('UPDATED DOC IN SERVER ROUTE', updatedDoc);
+      res.status(201);
+      res.send(updatedDoc);
     }
   });
 });
