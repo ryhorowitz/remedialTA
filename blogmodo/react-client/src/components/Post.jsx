@@ -1,30 +1,46 @@
 import React from 'react';
 import moment from 'moment';
+import $ from 'jquery';
 
-const pFormat = (body) => {
-  const splitParas = body.split('\n\n');
-  const mappedParas = splitParas.map( (para, i) => <p key={i}>{para}</p>);
-  return (
-    <div>{mappedParas}</div>
-  );
-};
+class Post extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-const Post = (props) => {
+
   // Refactor your Post component in such a way that every time it is rendered, an AJAX PATCH request is made to the server route you have just created.
+  componentDidMount () {
+    //$.patch or maybe post
+    const id = this.props.post._id;
+    const param = $.param({'blogId': id});
+    $.ajax({
+      url: `/api/blogs/${param}`,
+      method: 'PATCH', //might be post
+      success: (data) => {
+        console.log('PATCH SUCCESS CB DATA is', data);
+        this.setState(
+          //update state of this.props.post.views
+        );
+      }
+    });
+    console.log(id);
+  }
 
-  const posts = props.posts;
-  const i = props.selected;
-  const timeStamp = moment(posts[i].createdAt).fromNow();
+  render() {
+    const post = this.props.post;
+    const timeStamp = moment(post.createdAt).fromNow();
 
-  return (
-    <div className="post">
-      <h1 className="post-title">{posts[i].title}</h1>
-      <div className="post-byline"><span className="post-byline-author">author: {posts[i].author}</span>   {timeStamp}</div>
-      <img src={posts[i].imageUrl} className="post-image"/>
-      <div>{pFormat(posts[i].body)}</div>
-      <div>views: {posts[i].views}</div>
-    </div>
-  );
-};
+    return (
+      <div className="post">
+        <h1 className="post-title">{post.title}</h1>
+        <div className="post-byline"><span className="post-byline-author">author: {post.author}</span>   {timeStamp}</div>
+        <img src={post.imageUrl} className="post-image"/>
+        <div>{this.props.pFormat(post.body)}</div>
+        <div>views: {post.views}</div>
+      </div>
+    );
+  }
+}
 
 export default Post;

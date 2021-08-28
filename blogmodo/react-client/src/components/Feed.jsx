@@ -9,7 +9,7 @@ const Feed = (props) => {
       <div className="feed-list-item-title" onClick={props.handleClick}>{sample.title}</div>
       <div className="feed-list-item-byline"><span className="feed-list-item-byline-author">{sample.author}</span>{console.log('time is', timeStamp)} {timeStamp} </div>
       <img src={sample.imageUrl} onClick={props.handleClick} className="feed-list-item-image" />
-      <span className="feed-list-item-lede">{sample.body} </span>
+      <span className="feed-list-item-lede">{props.pFormat(sample.body)} </span>
     </li>;
   });
 

@@ -21,14 +21,14 @@ const find = (cb) => {
     if (err) {
       console.error('ERROR in DB FIND POSTS', err);
     } else {
-      console.log('BLOG FIND DOCS', docs);
+      // console.log('BLOG FIND DOCS', docs);
       cb(null, docs);
     }
   });
 };
 
 const patch = (id, cb) => {
-  Blog.findOneAndUpdate({ _id: id }, { views: +1 }, { new: true }, (err, doc) => {
+  Blog.findOneAndUpdate({ _id: id }, { $inc: { views: 1 }}, { new: true }, (err, doc) => {
     if (err) {
       console.error('ERROR IN PATCH TO DB', err);
     } else {

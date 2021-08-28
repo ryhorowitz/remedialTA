@@ -18,18 +18,26 @@ class App extends React.Component {
     };
     this.selectPost = this.selectPost.bind(this);
     this.changeView = this.changeView.bind(this);
+    this.pFormat = this.pFormat.bind(this);
+
+  }
+
+  pFormat(body) {
+    const splitParas = body.split('\n\n');
+    const mappedParas = splitParas.map( (para, i) => <p key={i}>{para}</p>);
+    return (
+      <div>{mappedParas}</div>
+    );
   }
   selectPost(e) {
-    console.log('INNERTEXT IS', e.target.parentNode.firstChild.innerText);
     const title = e.target.parentNode.firstChild.innerText;
-    //selected === sampleData where i.title equals title
     const i = this.state.posts.findIndex( post => post.title === title);
     this.setState({
       selected: i
     });
     this.changeView(sampleData[i].title);
   }
-  // In the App component for your client, refactor the view switcher in such a way that setting the value of view will cause your new Admin component to be rendered.
+
   changeView(option) {
 
     this.setState({
@@ -37,7 +45,6 @@ class App extends React.Component {
     });
   }
   componentDidMount() {
-
     $.get({
       url: '/api/blogs',
       success: (data) => {
@@ -54,14 +61,17 @@ class App extends React.Component {
     // Refactor the navigation section of the App to allow the user to navigate to the Admin view by clicking "Admin" in the nav bar at the top of the app.
     if (view === 'feed') {
       return <Feed
+        pFormat={this.pFormat}
         handleClick={this.selectPost}
         samples={this.state.posts}/>;
     } else if (view === 'admin') {
       return <Admin posts={this.state.posts}/>;
     } else {
       return <Post
+        pFormat={this.pFormat}
         posts={this.state.posts}
-        selected={this.state.selected}/>;
+        selected={this.state.selected}
+        post={this.state.posts[this.state.selected]}/>;
     }
   }
   render() {
@@ -81,8 +91,10 @@ class App extends React.Component {
           <span className="nav-unselected">
             Write a Post
           </span>
-          <span className="nav-unselected"
-            onClick={() => this.changeView('admin')}>
+          <span className={this.state.view === 'admin'
+            ? 'nav-selected'
+            : 'nav-unselected'}
+          onClick={() => this.changeView('admin')}>
             Admin
           </span>
         </div>

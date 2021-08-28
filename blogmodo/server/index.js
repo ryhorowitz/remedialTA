@@ -17,7 +17,7 @@ app.get('/api/blogs', function(req, res) {
     if (err) {
       console.error('ERROR in find', err);
     } else {
-      console.log('DATA in SERVER', data);
+      //console.log('DATA in SERVER', data);
       res.status(200).send(data);
     }
   });
@@ -26,7 +26,9 @@ app.get('/api/blogs', function(req, res) {
 // Use Express' route parameters to get the blogId out of your request URL.
 app.patch('/api/blogs/:blogId', (req, res) => {
   //req.params;
-  patch(req.body.id, (err, updatedDoc) => {
+  const _id = req.params.blogId.slice(7);
+  console.log('PATCH _ID is', _id);
+  patch(_id, (err, updatedDoc) => {
     if (err) {
       console.error('ERROR IN SERVER PATCH ROUTE', err);
     } else {
