@@ -1,10 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-// createdAt: '2017-11-14T05:57:26.037Z',
-// moment(sample.createdAt); is an object.
 const Feed = (props) => {
-  //const relativeTime = moment.updateLocale('en');
 
   const listItems = props.samples.map( (sample, i) => {
     let timeStamp = moment(sample.createdAt).fromNow();

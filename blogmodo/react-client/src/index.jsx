@@ -37,26 +37,39 @@ class App extends React.Component {
     super();
     this.state = {
       view: 'feed',
-      sampleData: sampleData //[{},{},{},{}]
-    };
+      posts: sampleData, //[{},{},{},{}],
+      selected: 0
 
+    };
+    this.selectPost = this.selectPost.bind(this);
     this.changeView = this.changeView.bind(this);
+  }
+  selectPost(e) {
+    console.log('INNERTEXT IS', e.target.parentNode.firstChild.innerText);
+    const title = e.target.parentNode.firstChild.innerText;
+    //selected === sampleData where i.title equals title
+    const i = this.state.posts.findIndex( post => post.title === title);
+    this.setState({
+      selected: i
+    });
+    this.changeView(sampleData[i].title);
   }
 
   changeView(option) {
+
     this.setState({
       view: option
     });
   }
   componentDidMount() {
-    //get req /api/blogs
+
     $.get({
       url: '/api/blogs',
       success: (data) => {
         console.log(data);
         //do something with the data
         this.setState({
-          sampleData: data
+          posts: data
         });
       }
     });
@@ -66,10 +79,12 @@ class App extends React.Component {
 
     if (view === 'feed') {
       return <Feed
-        handleClick={() => this.changeView('anypostview')}
-        samples={this.state.sampleData}/>;
+        handleClick={this.selectPost}
+        samples={this.state.posts}/>;
     } else {
-      return <Post />;
+      return <Post
+        posts={this.state.posts}
+        selected={this.state.selected}/>;
     }
   }
   render() {
