@@ -18,10 +18,9 @@ class Post extends React.Component {
       url: `/api/blogs/${param}`,
       method: 'PATCH', //might be post
       success: (data) => {
-        console.log('PATCH SUCCESS CB DATA is', data);
-        this.setState(
-          //update state of this.props.post.views
-        );
+        console.log('PATCH SUCCESS CB VIEWS is', data.views);
+        //call a function that updates parent state
+        this.props.updateViewCount();
       }
     });
     console.log(id);

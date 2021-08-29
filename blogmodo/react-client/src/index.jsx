@@ -14,12 +14,11 @@ class App extends React.Component {
       view: 'feed',
       posts: sampleData, //[{},{},{},{}],
       selected: 0
-
     };
+    this.updateViewCount = this.updateViewCount.bind(this);
     this.selectPost = this.selectPost.bind(this);
     this.changeView = this.changeView.bind(this);
     this.pFormat = this.pFormat.bind(this);
-
   }
 
   pFormat(body) {
@@ -29,11 +28,17 @@ class App extends React.Component {
       <div>{mappedParas}</div>
     );
   }
+
+  updateViewCount() {
+    this.getPosts;
+  }
+
   selectPost(e) {
     const title = e.target.parentNode.firstChild.innerText;
     const i = this.state.posts.findIndex( post => post.title === title);
     this.setState({
-      selected: i
+      selected: i,
+
     });
     this.changeView(sampleData[i].title);
   }
@@ -45,17 +50,20 @@ class App extends React.Component {
     });
   }
   componentDidMount() {
+    this.getPosts();
+  }
+  getPosts () {
     $.get({
       url: '/api/blogs',
       success: (data) => {
         console.log(data);
-        //do something with the data
         this.setState({
           posts: data
         });
       }
     });
   }
+
   renderView() {
     const {view} = this.state;
     // Refactor the navigation section of the App to allow the user to navigate to the Admin view by clicking "Admin" in the nav bar at the top of the app.
@@ -68,6 +76,7 @@ class App extends React.Component {
       return <Admin posts={this.state.posts}/>;
     } else {
       return <Post
+        updateViewCount={this.updateViewCount}
         pFormat={this.pFormat}
         posts={this.state.posts}
         selected={this.state.selected}
