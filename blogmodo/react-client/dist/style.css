@@ -32,7 +32,7 @@ h2 {
 }
 
 .feed-list-item-title {
-  font-size: 1.8em;   
+  font-size: 1.8em;
   font-family: 'Francois One';
   margin-bottom: 10px;
 }
@@ -106,7 +106,6 @@ button {
   float: right;
   margin: 0 auto;
 }
-
 
 .create-input {
   width: 80%;

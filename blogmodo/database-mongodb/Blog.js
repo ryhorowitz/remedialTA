@@ -38,6 +38,17 @@ const patch = (id, cb) => {
   });
 };
 
+const insert = (doc, cb) => {
+  Blog.insertOne(doc, (err, doc) => {
+    if (err) {
+      console.error('ERROR IN INSERT TO DB', err);
+    } else {
+      console.log('Inserted DOC', doc);
+      cb(null, doc);
+    }
+  });
+}
+
 
 
 module.exports = { Blog, find, patch };

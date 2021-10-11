@@ -7,7 +7,7 @@ const Feed = (props) => {
     let timeStamp = moment(sample.createdAt).fromNow();
     return <li className="feed-list-item" key={sample._id}>
       <div className="feed-list-item-title" onClick={props.handleClick}>{sample.title}</div>
-      <div className="feed-list-item-byline"><span className="feed-list-item-byline-author">{sample.author}</span>{console.log('time is', timeStamp)} {timeStamp} </div>
+      <div className="feed-list-item-byline"><span className="feed-list-item-byline-author">{sample.author}</span> {timeStamp} </div>
       <img src={sample.imageUrl} onClick={props.handleClick} className="feed-list-item-image" />
       <span className="feed-list-item-lede">{props.pFormat(sample.body)} </span>
     </li>;

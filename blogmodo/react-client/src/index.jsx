@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 
+import Create from './components/Create.jsx'
 import Post from './components/Post.jsx';
 import Feed from './components/Feed.jsx';
 import Admin from './components/Admin.jsx';
@@ -74,6 +75,8 @@ class App extends React.Component {
         samples={this.state.posts}/>;
     } else if (view === 'admin') {
       return <Admin posts={this.state.posts}/>;
+    } else if (view === 'create') {
+      return <Create/>
     } else {
       return <Post
         updateViewCount={this.updateViewCount}
@@ -97,7 +100,10 @@ class App extends React.Component {
           onClick={() => this.changeView('feed')}>
             See all Posts
           </span>
-          <span className="nav-unselected">
+          <span className={this.state.view === 'create'
+            ? 'nav-selected'
+            : 'nav-unselected'}
+            onClick={() => this.changeView('create')}>
             Write a Post
           </span>
           <span className={this.state.view === 'admin'
