@@ -38,8 +38,9 @@ const patch = (id, cb) => {
   });
 };
 
-const insert = (doc, cb) => {
-  Blog.insertOne(doc, (err, doc) => {
+const insert = (data, cb) => {
+  const doc = new Blog(data)
+  doc.save((err, doc) => {
     if (err) {
       console.error('ERROR IN INSERT TO DB', err);
     } else {
@@ -51,4 +52,4 @@ const insert = (doc, cb) => {
 
 
 
-module.exports = { Blog, find, patch };
+module.exports = { Blog, find, patch, insert };

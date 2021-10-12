@@ -7,28 +7,43 @@ class Create extends React.Component {
     this.state = {
       title: '',
       author: '',
-      imageUrl: '',
+      imageUrl: 'http://placecorgi.com/260/180',
       body: ''
       // timestamp?
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(e) {
     e.preventDefault();
-
+    fetch('/api/blogs/', {
+      method: 'POST',
+      body: JSON.stringify({
+        title: this.state.title,
+        author: this.state.author,
+        imageUrl: this.state.imageUrl,
+        body: this.state.body
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
+    .then( response => response.json())
+    .then( json => console.log(json))
+    .catch( err => console.error(err))
   }
 
   handleChange(e) {
-    console.log('e.target.name', e.target.name)
-    console.log('e.target.value', e.target.value)
-    this.setState( {
-      [e.target.name]: e.target.value
-    })
+    // console.log('e.target.name', e.target.name)
+    // console.log('e.target.value', e.target.value)
+    let key = e.target.name;
+    let obj = {};
+    obj[e.target.name] = e.target.value;
+    this.setState(obj);
   }
 
   render() {
-// add state to formData
-// onChange={this.handleChange}
     return (
     <div className="create">
       <div className="create-editor">
@@ -38,36 +53,35 @@ class Create extends React.Component {
             type="text"
             id='title'
             name='title'
-            value=''
+            value={this.state.title}
             placeholder="Post Title"
-            onChange={this.handleChange}>
+            onChange={(e) => {this.handleChange(e)}}>
           </input>
           <input
             className="create-input"
             type="text"
-            value=''
+            value={this.state.author}
             id='author'
             name='author'
             placeholder="Author"
-            onChange={this.handleChange}>
+             onChange={(e) => {this.handleChange(e)}}>
             </input>
           <input
             className="create-input"
             type="text"
-            value=''
+            value={this.state.imageUrl}
             id='image-url'
             name='image-url'
             placeholder="Image URL"
-            onChange={this.handleChange}>
+             onChange={(e) => {this.handleChange(e)}}>
           </input>
           <textarea
             className="create-body-textarea"
-            value=''
+            value={this.state.body}
             id='body'
             name='body'
-            value=''
             placeholder="Post Body"
-            onChange={this.handleChange}>
+             onChange={(e) => {this.handleChange(e)}}>
           </textarea>
           <button
             className="create-submit-button"

@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const formdataParser = require('multer')().fields([])
 const db = require('../database-mongodb/index.js');
-const { Blogs, find, patch } = require('../database-mongodb/Blog.js');
+const { Blogs, find, patch, insert } = require('../database-mongodb/Blog.js');
 
 const app = express();
 const PORT = 3000;
@@ -41,16 +41,18 @@ app.patch('/api/blogs/:blogId', (req, res) => {
 });
 // In your Express server, create a request handler that will respond to a `POST` request to the route `/api/blogs/`. Your request handler should take the data sent in the body of the request, and use that data to create and save a new blog post to your database.
 app.post('/api/blogs/', (req, res) => {
-  //form data in req
-  //insert(data, (err, success) => {
-    // if (err) {
-    //   console.error('ERROR IN SERVER INSERT ROUTE', err);
-    // } else {
-    //   console.log('UPDATED DOC IN INSERT ROUTE', updatedDoc);
-    //   res.status(201);
-    //   res.send(updatedDoc);
-    // }
-  // })
+  console.log('req.body', req.body);
+  const doc = req.body;
+  insert(doc, (err, success) => {
+    if (err) {
+      console.error('ERROR IN SERVER INSERT ROUTE', err);
+      res.sendStatus(418);
+    } else {
+      console.log('UPDATED DOC IN INSERT ROUTE', success);
+      res.status(201);
+      res.send(success);
+    }
+  })
 
 })
 

@@ -12,7 +12,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      view: 'feed',
+      view: 'create',
       posts: sampleData, //[{},{},{},{}],
       selected: 0
     };
