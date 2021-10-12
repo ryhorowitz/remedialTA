@@ -21,6 +21,7 @@ h2 {
   border-radius: 4px;
   padding: 30px 50px 0px 50px;
   box-shadow: 0 0 1em #80808066;
+  position: relative;
 }
 
 .feed-list-item-image {
@@ -40,6 +41,13 @@ h2 {
 .feed-list-item-lede {
   display: block;
   margin-bottom: 50px;
+}
+
+.feed-list-item-views {
+  display: block;
+  position: absolute;
+  bottom: 0px;
+
 }
 
 .feed-list-item-byline {

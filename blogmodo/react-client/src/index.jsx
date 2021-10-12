@@ -12,7 +12,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      view: 'create',
+      view: 'feed',
       posts: sampleData, //[{},{},{},{}],
       selected: 0
     };
@@ -31,7 +31,7 @@ class App extends React.Component {
   }
 
   updateViewCount() {
-    this.getPosts;
+    this.getPosts();
   }
 
   selectPost(e) {
